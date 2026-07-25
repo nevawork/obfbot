@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: obfbot
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      BOT_OWNER_ID: ${BOT_OWNER_ID}
+      DATABASE_URL: postgresql://obfbot:obfbot_password@db:5432/obfbot
+      LOG_LEVEL: INFO
+      MAX_CONCURRENT_JOBS: 10
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+      - ./temp:/app/temp
+      - ./output:/app/output
+      - ./backups:/app/backups
+    restart: unless-stopped
+    networks:
+      - obfbot-network
+
+  db:
+    image: postgres:15-alpine
+    container_name: obfbot-db
+    environment:
+      POSTGRES_USER: obfbot
+      POSTGRES_PASSWORD: obfbot_password
+      POSTGRES_DB: obfbot
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - obfbot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U obfbot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  obfbot-network:
+    driver: bridge
