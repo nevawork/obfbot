@@ -1,0 +1,35 @@
+# Core Discord Bot
+nextcord==2.5.0
+python-dotenv==1.0.0
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+
+# Async & Performance
+aiofiles==23.2.1
+aiohttp==3.9.1
+
+# Lua Parsing
+lupa==1.14.1
+
+# Utilities
+click==8.1.7
+colorama==0.4.6
+
+# Logging
+python-json-logger==2.0.7
+
+# Security
+cryptography==41.0.7
+
+# Type Hints
+pydantic==2.5.1
+
+# Development
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.12.1
+pylint==3.0.3
+mypy==1.7.1
